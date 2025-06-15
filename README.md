@@ -25,3 +25,11 @@ docker-compose up -d
 # Backend: http://localhost:3001
 # Keycloak: http://localhost:8080
 ```
+
+## Uruchamianie developmentowe
+
+### 1. Uruchom tylko Keycloak i bazę danych:
+
+```bash
+docker-compose up postgres keycloak -d
+```
