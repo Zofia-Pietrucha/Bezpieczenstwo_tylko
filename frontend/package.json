@@ -1,0 +1,19 @@
+{
+  "name": "security-frontend",
+  "version": "1.0.0",
+  "description": "React frontend for security project",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "react",
+    "security",
+    "keycloak"
+  ],
+  "author": "Zofia Pietrucha",
+  "license": "MIT"
+}

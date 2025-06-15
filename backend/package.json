@@ -1,0 +1,19 @@
+{
+  "name": "security-backend",
+  "version": "1.0.0",
+  "description": "Node.js backend for security project",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "security",
+    "jwt"
+  ],
+  "author": "Zofia Pietrucha",
+  "license": "MIT"
+}
