@@ -6,6 +6,11 @@ require("dotenv").config();
 const { verifyKeycloakConnection } = require("./services/keycloak");
 const { authenticateToken, requireRole } = require("./middleware/auth");
 
+// Import routes
+const userRoutes = require("./routes/userRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const productRoutes = require("./routes/productRoutes");
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -25,6 +30,11 @@ app.get("/health", (req, res) => {
     status: "OK",
     message: "Backend server is running",
     timestamp: new Date().toISOString(),
+    endpoints: {
+      public: ["/health", "/api/public/info"],
+      protected: ["/api/user/*", "/api/products/*"],
+      admin: ["/api/admin/*", "/api/products/stats"],
+    },
   });
 });
 
@@ -32,10 +42,16 @@ app.get("/api/public/info", (req, res) => {
   res.status(200).json({
     message: "This is a public endpoint",
     data: "Anyone can access this",
+    serverTime: new Date().toISOString(),
   });
 });
 
-// Protected routes (will be expanded in next commits)
+// Protected routes
+app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/products", productRoutes);
+
+// Legacy test endpoints (for backward compatibility)
 app.get("/api/protected/test", authenticateToken, (req, res) => {
   res.status(200).json({
     message: "This is a protected endpoint",
@@ -47,7 +63,6 @@ app.get("/api/protected/test", authenticateToken, (req, res) => {
   });
 });
 
-// Admin only route
 app.get(
   "/api/admin/test",
   authenticateToken,
@@ -75,17 +90,15 @@ app.use((err, req, res, next) => {
 
 // Start server with Keycloak verification
 const startServer = async () => {
-  // Verify Keycloak connection
   await verifyKeycloakConnection();
 
   app.listen(PORT, () => {
     console.log(`🚀 Backend server running on port ${PORT}`);
     console.log(`📋 Health check: http://localhost:${PORT}/health`);
     console.log(`🌐 Public API: http://localhost:${PORT}/api/public/info`);
-    console.log(
-      `🔒 Protected API: http://localhost:${PORT}/api/protected/test`
-    );
-    console.log(`👑 Admin API: http://localhost:${PORT}/api/admin/test`);
+    console.log(`👤 User API: http://localhost:${PORT}/api/user/*`);
+    console.log(`📦 Products API: http://localhost:${PORT}/api/products`);
+    console.log(`👑 Admin API: http://localhost:${PORT}/api/admin/*`);
   });
 };
 
