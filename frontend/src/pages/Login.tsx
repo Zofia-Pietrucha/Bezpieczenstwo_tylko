@@ -1,9 +1,22 @@
 import React from "react";
+import { useKeycloak } from "../contexts/KeycloakContext.tsx";
+import { Navigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const handleLogin = () => {
-    alert("Keycloak integration will be implemented in the next commit!");
-  };
+  const { authenticated, loading, login } = useKeycloak();
+
+  // Jeśli już zalogowany, przekieruj do dashboard
+  if (authenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", padding: "2rem" }}>
+        <h2>🔄 Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: "400px", margin: "2rem auto" }}>
@@ -47,7 +60,7 @@ const Login: React.FC = () => {
         </div>
 
         <button
-          onClick={handleLogin}
+          onClick={login}
           style={{
             backgroundColor: "#3498db",
             color: "white",
@@ -63,7 +76,7 @@ const Login: React.FC = () => {
         </button>
 
         <p style={{ marginTop: "1rem", fontSize: "0.9rem", color: "#7f8c8d" }}>
-          Keycloak integration coming in Commit 10!
+          Click the button above to authenticate via Keycloak
         </p>
       </div>
     </div>

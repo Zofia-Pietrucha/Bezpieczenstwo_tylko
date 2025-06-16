@@ -1,12 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import { useKeycloak } from "../contexts/KeycloakContext.tsx";
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
+  const { authenticated, loading, login, logout, userInfo, hasRole } =
+    useKeycloak();
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", minHeight: "100vh" }}>
@@ -51,16 +53,71 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             >
               About
             </Link>
-            <Link
-              to="/login"
-              style={{
-                color: location.pathname === "/login" ? "#3498db" : "white",
-                textDecoration: "none",
-                fontWeight: location.pathname === "/login" ? "bold" : "normal",
-              }}
-            >
-              Login
-            </Link>
+
+            {authenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  style={{
+                    color:
+                      location.pathname === "/dashboard" ? "#3498db" : "white",
+                    textDecoration: "none",
+                    fontWeight:
+                      location.pathname === "/dashboard" ? "bold" : "normal",
+                  }}
+                >
+                  Dashboard
+                </Link>
+                {hasRole("admin") && (
+                  <Link
+                    to="/admin"
+                    style={{
+                      color:
+                        location.pathname === "/admin" ? "#3498db" : "white",
+                      textDecoration: "none",
+                      fontWeight:
+                        location.pathname === "/admin" ? "bold" : "normal",
+                    }}
+                  >
+                    Admin
+                  </Link>
+                )}
+                <span style={{ color: "#bdc3c7", fontSize: "0.9rem" }}>
+                  👤 {userInfo?.username}
+                </span>
+                <button
+                  onClick={logout}
+                  style={{
+                    backgroundColor: "#e74c3c",
+                    color: "white",
+                    border: "none",
+                    padding: "0.5rem 1rem",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                {!loading && (
+                  <button
+                    onClick={login}
+                    style={{
+                      backgroundColor: "#27ae60",
+                      color: "white",
+                      border: "none",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Login
+                  </button>
+                )}
+              </>
+            )}
           </div>
         </div>
       </nav>
