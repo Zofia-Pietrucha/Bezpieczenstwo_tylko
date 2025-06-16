@@ -2,7 +2,7 @@ const express = require("express");
 const { authenticateToken, requireRole } = require("../middleware/auth");
 const router = express.Router();
 
-// Endpoint tylko dla adminów - lista użytkowników
+// lista użytkowników
 router.get("/users", authenticateToken, requireRole("admin"), (req, res) => {
   const mockUsers = [
     {
@@ -39,7 +39,7 @@ router.get("/users", authenticateToken, requireRole("admin"), (req, res) => {
   });
 });
 
-// Endpoint tylko dla adminów - statystyki systemu
+// statystyki systemu
 router.get("/stats", authenticateToken, requireRole("admin"), (req, res) => {
   res.status(200).json({
     message: "System statistics",

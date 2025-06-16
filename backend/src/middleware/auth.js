@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
-// Prosty cache dla kluczy publicznych
 let publicKeys = null;
 let lastFetch = 0;
 const CACHE_DURATION = 3600000; // 1 godzina
@@ -38,8 +37,6 @@ const authenticateToken = async (req, res, next) => {
   }
 
   try {
-    // Dla uproszczenia - sprawdzimy tylko czy token nie jest pusty
-    // W następnym commicie dodamy pełną weryfikację
     const decoded = jwt.decode(token);
 
     if (!decoded) {
