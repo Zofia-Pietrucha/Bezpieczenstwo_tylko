@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useKeycloak } from "../contexts/KeycloakContext.tsx";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -67,6 +68,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   }}
                 >
                   Dashboard
+                </Link>
+                <Link
+                  to="/products"
+                  style={{
+                    color:
+                      location.pathname === "/products" ? "#3498db" : "white",
+                    textDecoration: "none",
+                    fontWeight:
+                      location.pathname === "/products" ? "bold" : "normal",
+                  }}
+                >
+                  Products
                 </Link>
                 {hasRole("admin") && (
                   <Link

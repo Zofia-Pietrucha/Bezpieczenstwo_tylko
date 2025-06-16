@@ -8,6 +8,7 @@ import About from "./pages/About.tsx";
 import Login from "./pages/Login.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import Admin from "./pages/Admin.tsx";
+import Products from "./pages/Products.tsx";
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,15 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute roles={["user"]}>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/products"
+              element={
+                <ProtectedRoute roles={["user"]}>
+                  <Products />
                 </ProtectedRoute>
               }
             />
