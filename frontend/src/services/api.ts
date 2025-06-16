@@ -1,7 +1,13 @@
+// import axios from "axios";
+// import keycloak from "../keycloak.ts";
+
+// const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
 import axios from "axios";
 import keycloak from "../keycloak.ts";
 
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL =
+  (window as any).env?.REACT_APP_API_URL || "http://localhost:3001";
 
 // Utwórz instancję axios
 export const api = axios.create({
