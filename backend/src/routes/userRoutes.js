@@ -43,7 +43,7 @@ router.get("/dashboard", authenticateToken, requireRole("user"), (req, res) => {
     },
   };
 
-  // Admin widzi dodatkowe dane
+  // Admin dodatkowo
   if (isAdmin) {
     dashboardData.data.adminStats = {
       totalUsers: 1250,

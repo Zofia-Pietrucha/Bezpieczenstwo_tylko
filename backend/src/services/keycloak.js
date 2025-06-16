@@ -2,7 +2,6 @@ const axios = require("axios");
 
 const getKeycloakConfig = async () => {
   try {
-    // Sprawdź podstawowy endpoint realm zamiast .well-known
     const response = await axios.get(
       `${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}`
     );

@@ -51,7 +51,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 
-// Legacy test endpoints (for backward compatibility)
 app.get("/api/protected/test", authenticateToken, (req, res) => {
   res.status(200).json({
     message: "This is a protected endpoint",
@@ -88,7 +87,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server with Keycloak verification
 const startServer = async () => {
   await verifyKeycloakConnection();
 
