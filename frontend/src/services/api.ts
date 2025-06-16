@@ -3,7 +3,6 @@ import keycloak from "../keycloak.ts";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
-// Utwórz instancję axios
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -34,12 +33,10 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // Spróbuj odświeżyć token
         await keycloak.updateToken(30);
         originalRequest.headers.Authorization = `Bearer ${keycloak.token}`;
         return api(originalRequest);
       } catch (refreshError) {
-        // Token nie może być odświeżony, przekieruj do logowania
         keycloak.login();
         return Promise.reject(refreshError);
       }

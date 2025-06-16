@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom";
 const Login: React.FC = () => {
   const { authenticated, loading, login } = useKeycloak();
 
-  // Jeśli już zalogowany, przekieruj do dashboard
   if (authenticated) {
     return <Navigate to="/dashboard" replace />;
   }

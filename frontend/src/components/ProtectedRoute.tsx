@@ -58,7 +58,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Sprawdź wymagane role
   if (roles.length > 0) {
     const hasRequiredRole = roles.some((role) => hasRole(role));
     if (!hasRequiredRole) {
